@@ -2,7 +2,9 @@ FROM python:3.10
 USER root
 RUN mkdir /app
 ADD . /app
-
+RUN mkdir ./.wdm
+RUN chmod 777 ./ .wdm
+#
 WORKDIR /app
 
 

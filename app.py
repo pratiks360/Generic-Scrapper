@@ -1,12 +1,11 @@
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 
-import react as r
+import scrapper as r
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-
 
 
 @cross_origin()
@@ -22,7 +21,7 @@ def scrape():
     filename = data['filename']
     filename = filename + '.txt'
 
-    text_content = r.scrape(url, xpath,  scope)
+    text_content = r.scrape(url, xpath, scope)
     response = Response(text_content, content_type='text/plain')
     response.headers['Content-Disposition'] = 'attachment; filename=' + filename
     return response
