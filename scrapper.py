@@ -17,16 +17,27 @@ def scrape(url, xpath, scope):
     driver.get(url)
 
     wait = WebDriverWait(driver, 4)
-
+    text_content = ""
     if scope.lower() == 'all':
         print('entire')
         wait.until(EC.presence_of_element_located((By.TAG_NAME, 'body')))
         text_content = driver.find_element(By.TAG_NAME, 'body').text
     elif scope.lower() == 'selective':
         print('selective')
-        wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
-        element = driver.find_element(By.XPATH, xpath)
-        text_content = element.text
+        if ";" not in xpath:
+            wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
+            element = driver.find_element(By.XPATH, xpath)
+            text_content = element.text
+        else:
+            xps = xpath.split(";")
+
+            for xp in xps:
+                wait.until(EC.presence_of_element_located((By.XPATH, xp)))
+                element = driver.find_element(By.XPATH, xp)
+                print(xp)
+                text_content = text_content + element.text
+                text_content = text_content + "\n\n###############################\n\n"
+                print(text_content)
 
     driver.quit()
     return text_content
