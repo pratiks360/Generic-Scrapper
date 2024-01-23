@@ -2,3 +2,4 @@ Flask
 selenium
 flask_cors
 webdriver_manager
+typing-extensions
